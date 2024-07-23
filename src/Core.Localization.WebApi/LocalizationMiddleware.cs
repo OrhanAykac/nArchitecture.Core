@@ -1,18 +1,13 @@
-﻿using System.Collections.Immutable;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
 using NArchitecture.Core.Localization.Abstraction;
+using System.Collections.Immutable;
 
 namespace NArchitecture.Core.Localization.WebApi;
 
-public class LocalizationMiddleware
+public class LocalizationMiddleware(RequestDelegate next)
 {
-    private readonly RequestDelegate _next;
-
-    public LocalizationMiddleware(RequestDelegate next)
-    {
-        _next = next ?? throw new ArgumentNullException(nameof(next));
-    }
+    private readonly RequestDelegate _next = next ?? throw new ArgumentNullException(nameof(next));
 
     public async Task Invoke(HttpContext context, ILocalizationService localizationService)
     {
